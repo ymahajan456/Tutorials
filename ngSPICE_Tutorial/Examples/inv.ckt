@@ -1,0 +1,20 @@
+* Inverter subcircuit
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+* ------------------------------------------------------------------------------
+*
+  Include CMOS model
+.include cmos_180nm.model
+
+* Define subcircuit 
+* .subcircuit <Subcircuit_Name> [<Pins>] [<Parameters = Default Value>]
+.subckt Inv Input Output Supply Ground Pwid = 1u Nwid = 1u Lmin = 0.18u
+
+* PMOS instance with paracitic caps
+MP1 Output Input Supply Supply cmosp 
+    + L = {Lmin} W = {Pwid} ad = {2*(Lmin*Pwid)} as =  {2*(Lmin*Pwid)} pd = {2*Pwid+4*Lmin} ps = {2*Pwid+4*Lmin}
+* NMOS instance with paracitic caps
+MN1 Output Input Ground Ground cmosn
+    + L = {Lmin} W = {Nwid} ad = {2*(Lmin*Nwid)} as =  {2*(Lmin*Nwid)} pd = {2*Nwid+4*Lmin} ps = {2*Nwid+4*Lmin}
+* End of subcircuit
+.ends
+

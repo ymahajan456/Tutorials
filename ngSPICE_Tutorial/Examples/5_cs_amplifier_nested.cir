@@ -1,0 +1,55 @@
+DC Analysis of Common source amplifier with Resistive load
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+
+* Objectives:
+*   MOSFET Model
+*   Importing Models
+*   Saving Internal Model parameters for plotting (Model Evaluation stage)
+*   Alter Method
+*   Nested Analysis loops
+* ------------------------------------------------------------------------------
+
+* Including model ".include < model_file_name >"
+* If file is not in current directory then provide relative/absolute path
+.include cmos_180nm.model
+
+* N-MOS model [M* <drain> <gate> <Source> <Body> <Model_Name> {optional parameters} ]
+M1 d g gnd gnd cmosn W=1u L=0.18u 
+* Load resistor
+R1 d Vdd 10k
+
+
+*voltage supply
+V1 Vdd gnd dc 1
+Vgs	g gnd dc 0.75
+
+.control
+* Save internal parameters ro raw files (managed by ngSpice)
+* Saving Vth ang Gm
+save all @M1[vth]
+save all @M1[gm]
+* Can use to get currents from defined two terminal devices e.g. R, C, L, D
+save all @R1[i]
+* ********************************
+* * Analysis at Vds = 1V
+* dc Vgs 0 1.8 0.01
+* plot v(d)
+* plot @M1[vth]
+* plot @M1[gm]
+* * Changing Vds to 1.8V
+* alter V1 dc 1.8
+* dc Vgs 0 1.8 0.01
+* * Reanalyzing deletes previous results
+* plot v(d)
+* plot @M1[vth]
+* plot @M1[gm]
+* *********************************
+* Nesterd Analysis to plot on the same graph
+dc Vgs 0 1.8 0.01 V1 1 1.8 0.8
+plot v(d)
+plot @M1[vth]
+plot @M1[gm]
+plot @R1[i]
+
+.endc
+.end

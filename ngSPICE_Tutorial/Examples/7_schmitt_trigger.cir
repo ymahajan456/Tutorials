@@ -1,0 +1,27 @@
+Schmitt Trigget Simulation
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+
+* Objectives:
+*   Accessing Invernal nodes of sub-circuit
+*   Using gnuplot to store plots and export data
+* ------------------------------------------------------------------------------
+
+* Include Schmitt Trigger Subcircuit
+.include schmitt_trigger.ckt
+
+* Schmitt Trigger
+x1 Input Ref Output SchmittTrigger
+* Input Voltage sources
+vin Input 0 sin(0 10 1K)
+va Ref 0 0
+
+
+.control
+* Transient Analysis
+tran 10u 15ms 10ms
+* Using gnuplot for storing data
+* gnuplot <File_Name> [<Vectors>]
+gnuplot nodeVoltages v(Input) v(Output) v(x1.fb)
+gnuplot hysteresis v(Output) vs v(Input)
+.endc
+.end

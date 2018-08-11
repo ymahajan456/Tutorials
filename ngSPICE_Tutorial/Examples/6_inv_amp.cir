@@ -1,0 +1,34 @@
+Inverter as Amplifier
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+
+* Objectives:
+*   Subcircuits
+*   Parameters
+*   Subcircuit Parameters
+* ------------------------------------------------------------------------------
+
+* Include Inverter Subcircuit
+.include inv.ckt
+* Defining Netlist Parameter f
+.param f = 100Meg
+
+* Subcircuit Instance with parameters
+x1 In Out Vd 0 Inv Pwid = 6.4u Nwid = 1u Lmin = 0.18u
+* Input source
+Vin In 0 SIN(0.9 0.1 {f}) AC 1
+* Supply
+Vdd Vd 0 Dc 1.8
+* Load resistor
+Rload Out 0 10k
+
+.control
+* AC analysis
+ac dec 100 1 100G
+plot vdb(Out)
+plot phase(v(Out))
+* Transient analysis
+tran 0.1n 0.1u
+plot v(in) v(out)
+
+.endc
+.end

@@ -1,0 +1,35 @@
+Resistive Divider Circuit
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+* Edited by OV Shashank (shashankov@ee.iitb.ac.in)
+
+*   This is a comment
+*   First line is the header and will be displayed on the terminal at the top of
+*   the report
+
+* Objectives:
+*   ngSpice netlist format
+*   DC Analysis
+*   Plotting Results
+* ------------------------------------------------------------------------------
+
+* Resistors
+R2 out gnd 10k
+R1 in out 10k
+
+* Voltage Source
+v1 in gnd dc 1v
+
+* Control block starts here
+.control
+* DC Analysis [ dc <Voltage_Source> <Start> <End> <Step_Size> ]
+dc v1 0 10 0.1
+
+* print v(out) v(in)
+plot v(out) v(in)
+plot i(v1)
+
+* End of control
+.endc
+
+* End of netlist (Mandatory)
+.end

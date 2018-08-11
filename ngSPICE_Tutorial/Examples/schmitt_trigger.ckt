@@ -1,0 +1,24 @@
+* Schmitt Trigger Subcircuit
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+* ------------------------------------------------------------------------------
+*Include files
+* OpAmp UA 741
+.include opAmp_ua741.model
+* 1N4688 Zener Diode
+.include zener_1N4688.model
+
+* Subcircuit Starts Here
+.subckt SchmittTrigger Input Ref Output
+* OpAmp <Non-Inverting> <Inverting> <Vdd> <Vss> <Out> <Model> [<Model Params>]
+xopam fb Input SourceP SourceN opOut ua741
+* Resistors
+R1 opOut Output 1k
+R2 Output fb 10k
+R3 fb Ref 10k
+* Zener diodes
+xz1 Output zj 1N4688
+xz2 Gnd zj 1N4688
+* Power supply for OpAmp
+VsourceP SourceP Gnd 15
+VsourceN SourceN Gnd -15
+.ends

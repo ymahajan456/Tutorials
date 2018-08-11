@@ -1,0 +1,27 @@
+Sinusoidal Sources
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+
+* Objectives:
+*   Transient Analysis
+*   Sinusoidal source
+* ------------------------------------------------------------------------------
+
+* Sinusoidal Source [ sin(<Offset> <Amplitude> <Frequency> {<Delay> <Damping_Factor>}) ]
+* Voltage Source
+v1 a gnd DC 3 SIN(5 1 1Meg)
+r1 a gnd 10k
+* Current source with delay
+i2 b gnd DC 5 SIN(5 1 1Meg 0.5u)
+r2 b gnd 1
+* Voltgae source with damping
+v3 c gnd DC 5 SIN(5 1 10Meg 0 1E6)
+r3 c gnd 10k
+
+.control
+* Transient Analysis [ tran <Step_Size> <Stop_Time> {<Start_Time>} ]
+tran 2n 2u
+
+plot v(a) v(b) 
+plot v(c)
+.endc
+.end

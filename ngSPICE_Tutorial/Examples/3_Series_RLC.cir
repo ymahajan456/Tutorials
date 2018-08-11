@@ -1,0 +1,50 @@
+Series RLC circuit Find F0, BW, Q factor
+* Example by Yogesh Mahajan [y.mahajan@gmail.com]
+
+* Objectives:
+*   AC (small signal) Analysis
+*   Measure and Let methods
+* ------------------------------------------------------------------------------
+
+* Series RLC
+R1 a b 15
+L1 b c 25m
+C1 c dummy 1u
+* Dummy voltage source to measure current through branch. [0 Voltage]
+Vdummy dummy gnd 0V
+* AC source
+Vin a gnd dc 0 ac 1
+
+.control
+* AC analysis [ ac {dec/oct/lin} <number_of_points> <F_start> <F_stop> ]
+ac dec 1000 100 10K
+* Current from the dummy voltage source
+plot i(Vdummy) i(Vin)
+* Alias for the current vector through voltage source
+* plot Vdummy#branch
+
+* Store the magnitude response data to variable i_vec
+let i_vec = mag(i(Vdummy))
+
+* Find the peak current value from this vector
+let i_max = vecmax(i_vec)
+
+* Measure resonant frequency from peak value obtained
+meas ac f0 when i_vec = i_max
+
+* Find the first 3-db point to the left of f0 (i_m)
+let i_half_power = i_max * 0.7071068
+meas ac f1 when i_vec = i_half_power
+
+* Calculate bandwidth
+let bandwidth = 2 * (f0 - f1)
+print bandwidth
+
+* Calculate Quality factor
+let q_factor = f0 / bandwidth
+print q_factor
+
+.endc
+.end
+
+*Check the terminal for all values of f0, Band-width and Q.
