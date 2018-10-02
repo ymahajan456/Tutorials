@@ -1,1 +1,0 @@
-# ngSpice-Tutorial
