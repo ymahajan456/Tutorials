@@ -16,4 +16,4 @@ In the folder named Installation all the necessary instructions for various comm
 
 ## Commands
 
-Most commonly used command to get started is specified the the Commands pdf
+Most commonly used commands to get started are specified the [Commands PDF](Commands.pdf).
